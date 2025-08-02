@@ -5,7 +5,7 @@ import { sendEmail } from "./utils/sendEmail.js";
 const app = express();
 const router = express.Router();
 
-const FRONTEND_URL = "https://ozone-2-0-gym-application-enzf.vercel.app/";
+const FRONTEND_URL = "https://ozone-2-0-gym-application-enzf.vercel.app";
 
 app.use(
   cors({
