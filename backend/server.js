@@ -5,7 +5,7 @@ import { sendEmail } from "./utils/sendEmail.js";
 const app = express();
 const router = express.Router();
 
-const FRONTEND_URL = "https://ozone-2-0-gym-application-enzf.vercel.app";
+const FRONTEND_URL = "https://ozone-2-0-gym-application-enzf.vercel.app/";
 
 app.use(
   cors({
@@ -28,12 +28,13 @@ router.get("/", (req, res) => {
 router.post("/send/mail", async (req, res, next) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message) {
-    return res.status(400).json({
-      success: false,
-      message: "Please provide all details",
-    });
+    return next(
+      res.status(400).json({
+        success: false,
+        message: "Please provide all details",
+      })
+    );
   }
-
   try {
     await sendEmail({
       email: "jimmyhere0214@gmail.com",
@@ -41,13 +42,11 @@ router.post("/send/mail", async (req, res, next) => {
       message,
       userEmail: email,
     });
-
     res.status(200).json({
       success: true,
       message: "Message Sent Successfully.",
     });
   } catch (error) {
-    console.error("Mail error:", error);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",
