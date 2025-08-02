@@ -5,7 +5,7 @@ import { sendEmail } from "./utils/sendEmail.js";
 const app = express();
 const router = express.Router();
 
-const FRONTEND_URL = "https://ozone-2-0-gym-application.vercel.app"; 
+const FRONTEND_URL = "https://ozone-2-0-gym-application-enzf.vercel.app"; 
 
 app.use(
   cors({
@@ -18,8 +18,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-router..get("/", (req, res) => {
-  res.send("✅ Backend API is live on Vercel!");
+router.get("/", (req, res) => {
+  res.status(200).json(
+    message: "Backend is deployed and running!",
+  );
 });
 
 
