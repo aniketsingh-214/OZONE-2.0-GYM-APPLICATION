@@ -1,16 +1,15 @@
 import express from "express";
-import { config } from "dotenv";
 import cors from "cors";
 import { sendEmail } from "./utils/sendEmail.js";
 
 const app = express();
 const router = express.Router();
 
-config({ path: "./config.env" });
+const FRONTEND_URL = "https://ozone-2-0-gym-application.vercel.app"; 
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: [FRONTEND_URL],
     methods: ["POST"],
     credentials: true,
   })
@@ -18,6 +17,11 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+router..get("/", (req, res) => {
+  res.send("✅ Backend API is live on Vercel!");
+});
+
 
 router.post("/send/mail", async (req, res, next) => {
   const { name, email, message } = req.body;
@@ -43,13 +47,14 @@ router.post("/send/mail", async (req, res, next) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: " Internal Server Error",
+      message: "Internal Server Error",
     });
   }
 });
 
 app.use(router);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening at port ${process.env.PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
